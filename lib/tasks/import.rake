@@ -1,8 +1,8 @@
 require 'csv'
 
 task :import_fungus_data, [] => [:environment] do
+  Fungus.delete_all
   Fungus.transaction do 
-    cap_shape_hash = {'b' => 'bell', 'c' => 'conical', 'x' => 'convex', 'f' => 'flat', 'k' => 'knobbed', 's' => 'sunken'}
     
     CSV.foreach('tmp/agaricus-lepiota.data') do |csv|
       f = Fungus.new
@@ -12,7 +12,7 @@ task :import_fungus_data, [] => [:environment] do
         f.edible = 'poisonous'
       end
 
-      f.cap_shape = cap_shape_hash[csv[1]]
+      f.cap_shape = Fungus.valid_cap_shape_hash[csv[1]]
 
       f.cap_surface  = csv[2]
       f.cap_color = csv[3]

@@ -1,0 +1,23 @@
+<style>
+  .title { font-weight: bold; }
+</style>
+
+<%= form_for @fungus, :url => '/', :method => :get do |f| %>
+  <%= f.collection_select :cap_shape, Fungus.valid_cap_shape_hash, :second, :second %>
+  <%= f.submit "Submit" %>
+<% end %>
+
+<% unless @fungi.empty? %>
+  <ul>
+  <li class="title"> Edibility, Cap Shape, Cap Surface</li>
+
+  <% @fungi.each do |fungus| %>
+    <li>
+      <%= fungus.edible %>,
+      <%= fungus.cap_shape %>,
+      <%= fungus.cap_surface %>
+    </li>
+  <% end %>
+
+  </ul>
+<% end %>
